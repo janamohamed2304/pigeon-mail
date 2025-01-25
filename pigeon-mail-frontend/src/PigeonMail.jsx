@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './PigeonMail.css'
 import Inbox from './inbox/Inbox'
-import Compose from './inbox/Compose'
+import Compose from './compose/Compose'
 import {Drawer} from '@mui/material';
 
 function PigeonMail() {
@@ -22,7 +22,10 @@ const [openCompose, setOpenCompose] = useState(false);
       <div className='main'>
 
             <div className='toolbar'>
-
+              <div className='search-bar'>
+                <input type='text' placeholder='Search mail' />
+                <button><img src='src/assets/icons/filter.png'/></button>
+              </div>
             </div>
 
             <div className='main-body'>
@@ -32,11 +35,7 @@ const [openCompose, setOpenCompose] = useState(false);
             </div>
 
       </div>
-
-
     </div>
-
-
 
     </>
   )

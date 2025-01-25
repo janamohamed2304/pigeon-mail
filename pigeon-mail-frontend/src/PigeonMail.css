@@ -1,17 +1,17 @@
 .base{
     width:98vw;
     height:96vh;
-    background-color: aqua;
+    /* background-color: aqua; */
     display:flex;
     flex-direction: row;
 }
 .sidebar{
     width:20%;
     height:100%;
-    background-color: royalblue;
-    display: flex;
-    flex-direction: column;
-
+    /* background-color: royalblue; */
+}
+.sidebar:hover{
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 .main{
     width:100%;
@@ -22,10 +22,60 @@
 .toolbar{
     width:100%;
     height:10%;
-    background-color: blue;
+    display:flex;
+    align-items: center;
+    /* background-color: blue; */
 }
+
+.toolbar .search-bar{
+    width:70%;
+    height:90%;
+    display:flex;
+    border-radius: 40px;
+    /* background-color: red; */
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+}
+.toolbar .search-bar input {
+    width: 93%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    margin-left:10px;
+    color: #333;
+}
+.toolbar .search-bar button {
+    width: 7%;
+    border: none;
+    border-radius: 100px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.toolbar .search-bar button:hover{
+    background-color: rgba(0,0,0,0.1);
+}
+.toolbar .search-bar button:active{
+    background-color: rgba(0,0,0,0);
+}
+
+.toolbar .search-bar button img{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+.toolbar:hover{
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
 .main-body{
     width:100%;
     height:90%;
-    background-color: rosybrown;
+    /* background-color: rosybrown; */
+}
+.main-body:hover{
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
