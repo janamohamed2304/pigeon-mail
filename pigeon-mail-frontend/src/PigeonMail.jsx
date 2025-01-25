@@ -12,10 +12,21 @@ const [openCompose, setOpenCompose] = useState(false);
   return (
     <>
     <div className='base'>
-
       <div className='sidebar'>
+
+              <div className='logo'>Pigeon Mail</div>
+              <button className='compose-btn' onClick={() => setOpenCompose(true)}>
+                <img src='src/assets/icons/note.png'/>
+                <h2>Compose</h2>
+              </button>
               <button onClick={() => setOpenInbox(true)}>Inbox</button>
-              <button onClick={() => setOpenCompose(true)}>Compose</button>
+              <button>Starred</button>
+              <button>Sent</button>
+              <button>Draft</button>
+              <div className='create-folder'>Create folder
+                <button><img src='src/assets/icons/plus.png'/></button>
+              </div>
+
 
       </div>
 
@@ -29,7 +40,7 @@ const [openCompose, setOpenCompose] = useState(false);
             </div>
 
             <div className='main-body'>
-              <Inbox />
+              {openInbox && <Inbox onClose={() => setOpenInbox(false)}/>}
               {openCompose && <Compose onClose={() => setOpenCompose(false)}/>}
 
             </div>

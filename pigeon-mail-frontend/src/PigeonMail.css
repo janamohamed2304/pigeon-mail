@@ -8,11 +8,82 @@
 .sidebar{
     width:20%;
     height:100%;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
     /* background-color: royalblue; */
+}
+.sidebar .logo{
+    width:90%;
+    height:10%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+}
+.sidebar .compose-btn{
+    width:90%;
+    height:12%;
+    display:flex;
+    justify-content: start;
+    background-color: transparent;
+    border: none;
+    border-radius: 40px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sidebar .compose-btn img{
+    width: 22%;
+    height: 37%;
+    object-fit: contain;
+    margin-left:5px ;
+    margin-right:7px ;
+    /* background-color: violet; */
+}
+
+.sidebar button{
+    width:100%;
+    height:6%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    border-radius: 40px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+.sidebar button:hover{
+    background-color: rgba(0,0,0,0.1);
 }
 .sidebar:hover{
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
+
+.sidebar .create-folder{
+    width:100%;
+    height:15%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.sidebar .create-folder button{
+    width:22%;
+    height:50%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border:none;
+}
+.sidebar .create-folder button img{
+    width:60%;
+    height:60%;
+    object-fit: contain;
+}
+
 .main{
     width:100%;
     height:100%;
