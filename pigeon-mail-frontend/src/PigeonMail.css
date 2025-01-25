@@ -9,6 +9,9 @@
     width:20%;
     height:100%;
     background-color: royalblue;
+    display: flex;
+    flex-direction: column;
+
 }
 .main{
     width:100%;
