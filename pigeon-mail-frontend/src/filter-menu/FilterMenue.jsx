@@ -232,7 +232,7 @@ return (
             ))}
             </Box>
         </FormControl>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mt={1}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" >
             <FormControl sx={{ width: '150px' }}>
                 <InputLabel>Date within</InputLabel>
                 <Select
@@ -243,6 +243,18 @@ return (
                 <MenuItem value="1 day">1 day</MenuItem>
                 <MenuItem value="1 week">1 week</MenuItem>
                 <MenuItem value="1 month">1 month</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl sx={{ width: '150px' }}>
+                <InputLabel>Priority</InputLabel>
+                <Select
+                value={filterOptions.priority}
+                onChange={(e) => handleFilterChange('', e.target.value)}
+                size="small"
+                >
+                <MenuItem value="urgent">urgent</MenuItem>
+                <MenuItem value="average">average</MenuItem>
+                <MenuItem value="low">low</MenuItem>
                 </Select>
             </FormControl>
             <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ height: '32px' }}>
