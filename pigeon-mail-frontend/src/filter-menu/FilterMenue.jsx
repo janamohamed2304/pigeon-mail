@@ -175,7 +175,6 @@ return (
         </Box>
 
         <FormControl fullWidth>
-            <InputLabel>Senders</InputLabel>
             <Box display="flex" alignItems="center" >
             <TextField
                 placeholder="Add sender"
@@ -205,7 +204,6 @@ return (
             </Box>
         </FormControl>
         <FormControl fullWidth>
-            <InputLabel>Receivers</InputLabel>
             <Box display="flex" alignItems="center" >
             <TextField
                 placeholder="Add receiver"
