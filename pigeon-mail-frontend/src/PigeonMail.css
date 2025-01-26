@@ -106,15 +106,6 @@
     /* background-color: red; */
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 }
-.toolbar .search-bar input {
-    width: 93%;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 14px;
-    margin-left:10px;
-    color: #333;
-}
 .toolbar .search-bar button {
     width: 7%;
     border: none;
