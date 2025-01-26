@@ -1,5 +1,4 @@
 import './Compose.css';
-import React from 'react';
 import Draggable from 'react-draggable';
 import { Box, TextField, Button } from '@mui/material';
 import { IoMdClose, IoMdAttach } from "react-icons/io";
