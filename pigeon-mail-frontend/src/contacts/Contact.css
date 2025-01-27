@@ -1,0 +1,59 @@
+.contact-component {
+    width:95%;
+    max-width: 1440px;
+    height:5%;
+    background-color: none;
+    margin: 0px auto;
+    display: inline-block;
+    align-items: center;
+    vertical-align: middle;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.contact-component:hover {
+    background-color: rgba(0, 0, 0, 0.096);
+}
+
+.check-box svg {
+    margin-left: 15px;
+    border-radius: 20px;
+}
+
+.name {
+    display: flex;
+    gap:15px;
+    float: left;
+    margin-top: 10px;
+}
+
+.icons {
+    padding:0 10px;
+    margin-right: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    float: right;
+    display: flex;
+    gap: 15px;
+}
+
+.icons svg{
+    padding: 7px;
+    border-radius: 20px;
+}
+
+.icons:hover, .check-box:hover {
+    cursor: pointer;
+}
+
+.icons svg:hover{
+    background-color: rgba(0, 0, 0, 0.151);
+}
+
+.line {
+    width:80%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.315);
+    margin: 7px auto;
+    border-radius: 2px;
+}
