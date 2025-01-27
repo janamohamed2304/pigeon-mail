@@ -20,9 +20,10 @@ const [filterOptions, setFilterOptions] = useState({
     to: '',
     subject: '',
     includeWords: '',
-    date: '1 day',
+    date: '',
     senders: [],
     receivers: [],
+    priority: '',
 });
 
 const handleClick = (event) => {
