@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  {  useState } from 'react';
 import './FolderOptions.css';
 
 
@@ -8,7 +8,7 @@ import { FaXmark} from "react-icons/fa6";
 //////////////////////////////////
 
 
-function FoldarOptions({ add, onClose }) {
+function FolderOptions({ add, onClose }) {
     
     const [newFolderName, setNewFolderName] = useState("");
 
@@ -23,10 +23,10 @@ function FoldarOptions({ add, onClose }) {
 
     return (
         <>
-           { add ? 
+        { add ? 
             (<>
                 {/* ADD */}
-                <div className="add-foldar">
+                <div className="add-folder">
                         <input id='add-input' type="text" value={newFolderName} onChange={(e) => setNewFolderName(e.target.value)} placeholder="New Folder Name" maxLength={10} autoFocus />
                         <div className="icons">
                             <div onClick={addFolder} title="Save"> <MdOutlineDone /> </div>
@@ -39,9 +39,9 @@ function FoldarOptions({ add, onClose }) {
                 edit
                 {console.log("Editing.. ")}
             </>)
-           }
+        }
         </>
     );
 }
 
-export default FoldarOptions;
+export default FolderOptions;

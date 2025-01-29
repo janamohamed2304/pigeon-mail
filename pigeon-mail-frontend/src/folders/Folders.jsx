@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Foldar from './Folder';
-import FoldarOptions from './FolderOptions';
+import {  useState } from 'react';
+import Folder from './Folder';
+import FolderOptions from './FolderOptions';
 import './Folders.css';
 
 
-function Foldars() {
+function Folders() {
 
     const [selectedFolder, setSelectedFolder] = useState(null);
 
@@ -18,7 +18,7 @@ function Foldars() {
 
     return (
         <>
-        <div className='inbox-header'>
+        <div className='folders-header'>
             <div className='selection'>
                 <button  className='frst-btn'><img src='src/assets/icons/stop.png'/></button>
                 <button  className='scnd-btn'><img src='src/assets/icons/down-arrow.png'/></button>
@@ -28,8 +28,7 @@ function Foldars() {
         </div>
         
         <div className='folders-list'>
-            <Foldar /><Foldar /><Foldar /><Foldar /><Foldar /><Foldar /><Foldar /><Foldar /><Foldar />
-        
+            <Folder /><Folder /><Folder /><Folder /><Folder />
         </div>
         
         <div className='pagination'>
@@ -37,9 +36,9 @@ function Foldars() {
             <button><img src='src/assets/icons/right.png'/></button>
         </div>
 
-        {edit && <FoldarOptions add={false} onClose={ToggleEdit}/>}
+        {edit && <FolderOptions add={false} onClose={ToggleEdit}/>}
         </>
     );
 }
 
-export default Foldars;
+export default Folders;

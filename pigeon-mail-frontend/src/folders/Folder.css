@@ -1,7 +1,6 @@
 .folder-component {
-    width:95%;
-    max-width: 1440px;
-    height:5%;
+    width:100%;
+    height:fit-content;
     background-color: none;
     margin: 0px auto;
     display: inline-block;

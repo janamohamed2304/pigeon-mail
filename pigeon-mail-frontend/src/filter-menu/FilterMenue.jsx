@@ -21,9 +21,9 @@ const [filterOptions, setFilterOptions] = useState({
     subject: '',
     includeWords: '',
     date: '',
+    priority: '',
     senders: [],
     receivers: [],
-    priority: '',
 });
 
 const handleClick = (event) => {
@@ -250,7 +250,7 @@ return (
                 <InputLabel>Priority</InputLabel>
                 <Select
                 value={filterOptions.priority}
-                onChange={(e) => handleFilterChange('', e.target.value)}
+                onChange={(e) => handleFilterChange('priority', e.target.value)}
                 size="small"
                 >
                 <MenuItem value="urgent">urgent</MenuItem>

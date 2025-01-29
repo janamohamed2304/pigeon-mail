@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './Contact.css';
 
 //////////ICONS///////////
@@ -25,11 +25,11 @@ function Contact() {
         <>
         
             <div className='contact-component'>
-               
+
                 <div className='name'>
                     <div className='check-box' onClick={ToggleCheck}>
                         {checked ?
-                          (<MdOutlineCheckBox />)
+                            (<MdOutlineCheckBox />)
                         : (<MdOutlineCheckBoxOutlineBlank />)}
                     </div>
                         {contactName}

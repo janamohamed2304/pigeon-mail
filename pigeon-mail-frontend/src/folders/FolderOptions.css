@@ -1,4 +1,4 @@
-.add-foldar {
+.add-folder {
     display: flex;
     flex-direction: row;
     gap: 50px;
@@ -6,7 +6,7 @@
     height: 35%;
 }
 
-.add-foldar input {
+.add-folder input {
     height: 20px;
     width: 350px;
     margin: 15px;
@@ -15,10 +15,10 @@
     border: 1px solid rgba(0, 0, 0, 0.582);
 }
 
-.add-foldar input:focus {
+.add-folder input:focus {
     background-color: rgba(0, 0, 0, 0.089);
 }
 
-.add-foldar .icons {
+.add-folder .icons {
     margin: 15px;
 }
