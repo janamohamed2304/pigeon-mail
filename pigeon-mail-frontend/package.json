@@ -14,6 +14,8 @@
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.1",
     "@mui/styled-engine-sc": "^6.4.0",
+    "@reduxjs/toolkit": "^2.5.1",
+    "axios": "^1.7.9",
     "pigeon-mail": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
