@@ -3,6 +3,8 @@ package com.example.pigeon_mail_backend.controller;
 import com.example.pigeon_mail_backend.model.User;
 import com.example.pigeon_mail_backend.security.JwtTokenProvider;
 import com.example.pigeon_mail_backend.service.AuthService;
+import com.example.pigeon_mail_backend.service.FileSystemService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +29,27 @@ public class UserController {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
+    private FileSystemService fileSystemService;
+
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
         try {
-            log.debug("Received request body: {}", user);  // Add this line
+            log.debug("Received request body: {}", user);
+
+            // Check if user already exists
+            if (fileSystemService.userExists(user.getEmail())) {
+                log.warn("Registration attempt with existing email: {}", user.getEmail());
+                return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Map.of(
+                        "error", "Registration failed",
+                        "message", "A user with this email already exists please Sign In",
+                        "type", "DuplicateUserException"
+                    ));
+            }
+
+            // Proceed with registration if user doesn't exist
             User createdUser = authService.registerUser(user);
             String token = jwtTokenProvider.generateToken(user.getEmail());
             
@@ -40,7 +59,6 @@ public class UserController {
             
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            // Add detailed error logging
             log.error("Detailed error in signup: ", e);
             return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)

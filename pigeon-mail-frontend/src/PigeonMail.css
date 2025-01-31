@@ -17,9 +17,15 @@
     width:90%;
     height:10%;
     display:flex;
-    justify-content: center;
+
     align-items: center;
     /* background-color: red; */
+}
+
+.sidebar .logo img{
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
 }
 .sidebar .compose-btn{
     width:90%;

@@ -47,7 +47,7 @@ function PigeonMail() {
     <>
       <div className='base'>
         <div className='sidebar'>
-          <div className='logo'>Pigeon Mail</div>
+          <div className='logo'><img src='src/assets/icons/lg.jpeg'/><h3>Mail</h3></div>
           <button className='compose-btn' onClick={() => handleViewSwitch('compose')}>
             <img src='src/assets/icons/note.png' alt='compose' />
             <h2>Compose</h2>
