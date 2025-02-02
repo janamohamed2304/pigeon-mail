@@ -69,4 +69,43 @@ public class UserController {
                 ));
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@Valid @RequestBody Map<String, String> loginRequest) {
+        try {
+            String email = loginRequest.get("email");
+            String password = loginRequest.get("password");
+            
+            if (email == null || password == null) {
+                return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", "Email and password are required"));
+            }
+            
+            User user = authService.loginUser(email, password);
+            String token = jwtTokenProvider.generateToken(user.getEmail());
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+            response.put("user", user);
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of(
+                    "error", "Authentication failed",
+                    "message", e.getMessage()
+                ));
+        } catch (Exception e) {
+            log.error("Login error: ", e);
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of(
+                    "error", "Login failed",
+                    "message", e.getMessage()
+                ));
+        }
+    }
 }

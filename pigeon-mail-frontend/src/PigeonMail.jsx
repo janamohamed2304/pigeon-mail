@@ -37,8 +37,6 @@ function PigeonMail() {
     });
   }
   
-
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -88,7 +86,6 @@ function PigeonMail() {
               <FilterMenu anchorEl={anchorEl} handleClose={handleClose} />
             </div>
           </div>
-
           <div className='main-body'>
             {views.inbox && <Inbox onClose={() => handleViewSwitch('')} />}
             {views.compose && <Compose onClose={() => handleViewSwitch('')} />}

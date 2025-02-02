@@ -4,7 +4,8 @@ import com.example.pigeon_mail_backend.model.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +20,14 @@ import java.util.Optional;
 public class FileSystemService {
     
     private String rootPath;
+    private final ObjectMapper mapper; // Make mapper a class field
 
     public FileSystemService() {
         this.rootPath = System.getProperty("user.dir") + "/storage";
+        this.mapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .setVisibility(PropertyAccessor.FIELD, Visibility.ANY)
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         createInitialStorage();
     }
 
@@ -84,11 +90,7 @@ public class FileSystemService {
         initializeUserDirectories(email);
         
         Path userPath = Paths.get(rootPath, "users", email, "user.json");
-        ObjectMapper mapper = new ObjectMapper();
-        
-        mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-        mapper.findAndRegisterModules();
-        
+
         try {
             mapper.writerWithDefaultPrettyPrinter()
                     .writeValue(userPath.toFile(), user);
@@ -104,7 +106,10 @@ public class FileSystemService {
         if (!Files.exists(userPath)) {
             return Optional.empty();
         }
-        ObjectMapper mapper = new ObjectMapper();
         return Optional.of(mapper.readValue(userPath.toFile(), User.class));
+    }
+
+    public String getRootPath() {
+        return this.rootPath;
     }
 }
