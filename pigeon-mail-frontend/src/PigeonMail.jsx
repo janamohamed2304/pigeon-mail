@@ -7,10 +7,8 @@ import FolderOptions from './folders/FolderOptions';
 import FilterMenu from './filter-menu/FilterMenue';
 import Contacts from './contacts/Contacts';
 import { TextField } from '@mui/material';
-
-//////////ICONS///////////
 import { FaFolderPlus } from "react-icons/fa";
-//////////////////////////
+
 
 
 function PigeonMail() {
@@ -51,9 +49,9 @@ function PigeonMail() {
             <h2>Compose</h2>
           </button>
           <button onClick={() => handleViewSwitch('inbox')}>Inbox</button>
-          <button>Starred</button>
-          <button>Sent</button>
-          <button>Draft</button>
+          <button onClick={() => handleViewSwitch('inbox')}>Starred</button>
+          <button onClick={() => handleViewSwitch('inbox')}>Sent</button>
+          <button onClick={() => handleViewSwitch('inbox')}>Draft</button>
           <button className='folders-btn' onClick={() => handleViewSwitch('folders')}>Folders</button>
           <button onClick={() => handleViewSwitch('contacts')}>Contacts</button>
           <div className='create-folder'>
