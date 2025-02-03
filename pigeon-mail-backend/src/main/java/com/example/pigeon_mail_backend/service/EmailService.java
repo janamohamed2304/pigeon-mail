@@ -1,5 +1,4 @@
 package com.example.pigeon_mail_backend.service;
-
 import com.example.pigeon_mail_backend.model.Email;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -8,12 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EmailService {
@@ -31,15 +31,18 @@ public class EmailService {
     }
     
     public void sendEmail(Email email) throws Exception {
-        log.debug("Starting email send process...");
-        log.debug("From: {}", email.getFromEmail());
-        log.debug("To: {}", email.getTo());
-        log.debug("Subject: {}", email.getSubject());
         
-        // Validate recipient exists
-        if (!fileSystemService.userExists(email.getTo())) {
-            log.error("Recipient does not exist: {}", email.getTo());
-            throw new Exception("Recipient not found: " + email.getTo());
+        // Validate recipients exist
+        List<String> invalidRecipients = new ArrayList<>();
+        for (String recipient : email.getTo()) {
+            if (!fileSystemService.userExists(recipient)) {
+                invalidRecipients.add(recipient);
+            }
+        }
+        
+        if (!invalidRecipients.isEmpty()) {
+            log.error("Recipients do not exist: {}", invalidRecipients);
+            throw new Exception("Recipients not found: " + String.join(", ", invalidRecipients));
         }
         
         // Validate sender exists
@@ -52,8 +55,10 @@ public class EmailService {
             // Save to sender's sent folder
             saveToSentFolder(email);
             
-            // Save to recipient's inbox
-            saveToInbox(email);
+           // Save to each recipient's inbox
+            for (String recipient : email.getTo()) {
+                saveToInbox(email, recipient);
+            }
             
             log.info("Email sent successfully from {} to {}", email.getFromEmail(), email.getTo());
         } catch (IOException e) {
@@ -80,19 +85,19 @@ public class EmailService {
         log.debug("Saved email to sent folder: {}", sentPath);
     }
     
-    private void saveToInbox(Email email) throws IOException {
+    private void saveToInbox(Email email, String recipient) throws IOException {
         String fileName = generateFileName(email);
         Path inboxPath = Paths.get(
             fileSystemService.getRootPath(),
             "users",
-            email.getTo(),
+            recipient,
             "inbox",
             fileName
         );
         
         ensureDirectoryExists(inboxPath.getParent());
         saveEmailToPath(email, inboxPath);
-        log.debug("Saved email to inbox: {}", inboxPath);
+        log.debug("Saved email to inbox for recipient {}: {}", recipient, inboxPath);
     }
     
     private void ensureDirectoryExists(Path path) throws IOException {

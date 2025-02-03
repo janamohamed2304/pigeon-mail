@@ -76,7 +76,6 @@ const handleRemoveReceiver = (index) => {
 };
 
 const handleSubmit = () => {
-    // Perform search with the selected filter options
     console.log('Applying filter:', filterOptions);
     handleClose();
 };

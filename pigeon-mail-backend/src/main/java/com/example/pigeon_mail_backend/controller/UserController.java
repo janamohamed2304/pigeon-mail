@@ -37,7 +37,7 @@ public class UserController {
         try {
             log.debug("Received request body: {}", user);
 
-            // Check if user already exists
+
             if (fileSystemService.userExists(user.getEmail())) {
                 log.warn("Registration attempt with existing email: {}", user.getEmail());
                 return ResponseEntity
@@ -49,7 +49,6 @@ public class UserController {
                     ));
             }
 
-            // Proceed with registration if user doesn't exist
             User createdUser = authService.registerUser(user);
             String token = jwtTokenProvider.generateToken(user.getEmail());
             

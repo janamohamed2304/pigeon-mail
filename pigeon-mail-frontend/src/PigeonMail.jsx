@@ -9,8 +9,6 @@ import Contacts from './contacts/Contacts';
 import { TextField } from '@mui/material';
 import { FaFolderPlus } from "react-icons/fa";
 
-
-
 function PigeonMail() {
   const [openInbox, setOpenInbox] = useState(false);
   const [openFolders, setOpenFolders] = useState(false);

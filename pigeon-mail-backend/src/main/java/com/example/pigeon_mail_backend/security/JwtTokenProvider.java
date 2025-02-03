@@ -1,4 +1,3 @@
-// src/main/java/com/example/pigeon_mail_backend/security/JwtTokenProvider.java
 package com.example.pigeon_mail_backend.security;
 
 import io.jsonwebtoken.Claims;

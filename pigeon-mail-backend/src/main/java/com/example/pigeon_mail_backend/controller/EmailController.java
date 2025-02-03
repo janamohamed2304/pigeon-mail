@@ -28,8 +28,8 @@ public class EmailController {
         
         try {
             // Validate input
-            if (email.getTo() == null || email.getTo().trim().isEmpty()) {
-                return ResponseEntity.badRequest().body(Map.of("error", "Recipient email is required"));
+            if (email.getTo() == null || email.getTo().isEmpty()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "At least one recipient is required"));
             }
             if (email.getSubject() == null || email.getSubject().trim().isEmpty()) {
                 return ResponseEntity.badRequest().body(Map.of("error", "Subject is required"));
@@ -48,7 +48,7 @@ public class EmailController {
             // Send email
             emailService.sendEmail(email);
             
-            Map<String, String> response = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
             response.put("message", "Email sent successfully");
             response.put("from", senderEmail);
             response.put("to", email.getTo());
