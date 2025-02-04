@@ -28,14 +28,14 @@ function SignUp() {
         try {
             setError('');
             setLoading(true);
-            console.log('Attempting signup with:', formData); // Add logging
+            console.log('Attempting signup with:', formData);
             
             const response = await signup(formData.name, formData.email, formData.password);
-            console.log('Signup successful:', response); // Add logging
+            console.log('Signup successful:', response);
             
-            navigate('/login');
+            navigate('/');
         } catch (err) {
-            console.error('Signup error full details:', err); // Add logging
+            console.error('Signup error full details:', err);
             setError(
                 err.response?.data?.message ||
                 'Failed to create an account. Please check your connection and try again.'
@@ -114,7 +114,7 @@ function SignUp() {
                 Already have an account?{' '}
                 <Link
                     component="button"
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate('/')}
                     underline="hover"
                 >
                     Sign In

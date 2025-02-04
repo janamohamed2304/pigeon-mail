@@ -50,6 +50,7 @@ function PigeonMail() {
           <button onClick={() => handleViewSwitch('inbox')}>Starred</button>
           <button onClick={() => handleViewSwitch('inbox')}>Sent</button>
           <button onClick={() => handleViewSwitch('inbox')}>Draft</button>
+          <button onClick={() => handleViewSwitch('inbox')}>Trash</button>
           <button className='folders-btn' onClick={() => handleViewSwitch('folders')}>Folders</button>
           <button onClick={() => handleViewSwitch('contacts')}>Contacts</button>
           <div className='create-folder'>

@@ -11,6 +11,7 @@
     display:flex;
     align-items: center;
     flex-direction: column;
+    border-radius:40px;
     /* background-color: royalblue; */
 }
 .sidebar .logo{
@@ -135,13 +136,14 @@
     object-fit: contain;
 }
 
-.toolbar:hover{
+/* .toolbar:hover{
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-}
+} */
 
 .main-body{
     width:100%;
     height:90%;
+    border-radius: 10px;
     /* background-color: rosybrown; */
 }
 .main-body:hover{

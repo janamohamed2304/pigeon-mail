@@ -8,14 +8,15 @@ import lombok.Data;
 
 @Data
 public class Email {
-    private List<String> to; //added list of recipients
+    private List<String> to;
     private String subject;
     private String message;
+    private String priority;
     private LocalDateTime sentAt;
     private String fromEmail;
-    private boolean isDeleted; //added isDeleted
-    private boolean isRead; //added isRead
-    private boolean isStarred; //added isStarred
+    private boolean isDeleted;
+    private boolean isRead;
+    private boolean isStarred;
 
     public Email() {
         this.sentAt = LocalDateTime.now();

@@ -20,7 +20,7 @@ import java.util.Optional;
 public class FileSystemService {
     
     private String rootPath;
-    private final ObjectMapper mapper; // Make mapper a class field
+    private final ObjectMapper mapper;
 
     public FileSystemService() {
         this.rootPath = System.getProperty("user.dir") + "/storage";
@@ -37,7 +37,6 @@ public class FileSystemService {
             Path gitKeepPath = Paths.get(rootPath, "users", ".gitkeep");
             if (!Files.exists(gitKeepPath)) {
                 Files.createFile(gitKeepPath);
-                log.info("Created .gitkeep file at: {}", gitKeepPath);
             }
         } catch (IOException e) {
             log.warn("Failed to create .gitkeep file: {}", e.getMessage());
@@ -51,14 +50,11 @@ public class FileSystemService {
             
             if (!Files.exists(storagePath)) {
                 Files.createDirectories(storagePath);
-                log.info("Created storage directory at: {}", storagePath);
             }
             if (!Files.exists(usersPath)) {
                 Files.createDirectories(usersPath);
-                log.info("Created users directory at: {}", usersPath);
             }
         } catch (IOException e) {
-            log.error("Failed to create initial storage structure: {}", e.getMessage());
             throw new RuntimeException("Failed to initialize storage system", e);
         }
     }
@@ -88,15 +84,12 @@ public class FileSystemService {
     public void saveUser(String email, User user) throws IOException {
         // First ensure directories exist
         initializeUserDirectories(email);
-        
         Path userPath = Paths.get(rootPath, "users", email, "user.json");
 
         try {
             mapper.writerWithDefaultPrettyPrinter()
                     .writeValue(userPath.toFile(), user);
-            log.debug("User saved successfully with hashed password");
         } catch (Exception e) {
-            log.error("Error saving user: {}", e.getMessage(), e);
             throw e;
         }
     }

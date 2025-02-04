@@ -3,8 +3,6 @@ import com.example.pigeon_mail_backend.model.Email;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
@@ -17,8 +15,7 @@ import java.util.List;
 
 @Service
 public class EmailService {
-    
-    private final Logger log = LoggerFactory.getLogger(EmailService.class);
+
     private final ObjectMapper mapper;
     
     @Autowired
@@ -32,7 +29,6 @@ public class EmailService {
     
     public void sendEmail(Email email) throws Exception {
         
-        // Validate recipients exist
         List<String> invalidRecipients = new ArrayList<>();
         for (String recipient : email.getTo()) {
             if (!fileSystemService.userExists(recipient)) {
@@ -41,31 +37,23 @@ public class EmailService {
         }
         
         if (!invalidRecipients.isEmpty()) {
-            log.error("Recipients do not exist: {}", invalidRecipients);
             throw new Exception("Recipients not found: " + String.join(", ", invalidRecipients));
         }
         
-        // Validate sender exists
         if (!fileSystemService.userExists(email.getFromEmail())) {
-            log.error("Sender does not exist: {}", email.getFromEmail());
             throw new Exception("Sender not found: " + email.getFromEmail());
         }
         
         try {
-            // Save to sender's sent folder
             saveToSentFolder(email);
             
-           // Save to each recipient's inbox
             for (String recipient : email.getTo()) {
                 saveToInbox(email, recipient);
             }
             
-            log.info("Email sent successfully from {} to {}", email.getFromEmail(), email.getTo());
         } catch (IOException e) {
-            log.error("Failed to save email", e);
             throw new Exception("Failed to save email: " + e.getMessage());
         } catch (Exception e) {
-            log.error("Unexpected error while sending email", e);
             throw new Exception("Failed to process email: " + e.getMessage());
         }
     }
@@ -82,7 +70,6 @@ public class EmailService {
         
         ensureDirectoryExists(sentPath.getParent());
         saveEmailToPath(email, sentPath);
-        log.debug("Saved email to sent folder: {}", sentPath);
     }
     
     private void saveToInbox(Email email, String recipient) throws IOException {
@@ -97,12 +84,10 @@ public class EmailService {
         
         ensureDirectoryExists(inboxPath.getParent());
         saveEmailToPath(email, inboxPath);
-        log.debug("Saved email to inbox for recipient {}: {}", recipient, inboxPath);
     }
     
     private void ensureDirectoryExists(Path path) throws IOException {
         if (!Files.exists(path)) {
-            log.debug("Creating directory: {}", path);
             Files.createDirectories(path);
         }
     }
@@ -111,7 +96,6 @@ public class EmailService {
         try {
             mapper.writeValue(path.toFile(), email);
         } catch (IOException e) {
-            log.error("Failed to save email to path: {}", path, e);
             throw e;
         }
     }

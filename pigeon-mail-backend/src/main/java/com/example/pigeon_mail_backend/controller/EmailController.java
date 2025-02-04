@@ -27,7 +27,6 @@ public class EmailController {
         log.debug("Received email request from authenticated user");
         
         try {
-            // Validate input
             if (email.getTo() == null || email.getTo().isEmpty()) {
                 return ResponseEntity.badRequest().body(Map.of("error", "At least one recipient is required"));
             }
@@ -38,14 +37,8 @@ public class EmailController {
                 return ResponseEntity.badRequest().body(Map.of("error", "Message is required"));
             }
             
-            // Get authenticated user's email
             String senderEmail = authentication.getName();
-            log.debug("Sender email from authentication: {}", senderEmail);
-            
-            // Set sender email
             email.setFromEmail(senderEmail);
-            
-            // Send email
             emailService.sendEmail(email);
             
             Map<String, Object> response = new HashMap<>();

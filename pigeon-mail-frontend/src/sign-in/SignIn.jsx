@@ -32,7 +32,7 @@ function SignIn() {
             const response = await login(formData.email, formData.password);
             console.log('Login successful:', response);
             
-            navigate('/');
+            navigate('/dashboard');
         } catch (err) {
             console.error('Login error:', err);
             setError(

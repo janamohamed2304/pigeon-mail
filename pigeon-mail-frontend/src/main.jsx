@@ -13,8 +13,8 @@ function App() {
     <AuthProvider>
       <Routes>
         {/* Define routes for your pages */}
-        <Route path="/" element={<PigeonMail />} /> {/* Default/home page */}
-        <Route path="/login" element={<SignIn />} /> {/* Sign-in page */}
+        <Route path="/dashboard" element={<PigeonMail />} /> {/* Default/home page */}
+        <Route path="/" element={<SignIn />} /> {/* Sign-in page */}
         <Route path="/signup" element={<SignUp />} /> {/* Sign-up page */}
       </Routes>
     </AuthProvider>

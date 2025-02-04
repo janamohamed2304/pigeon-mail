@@ -1,6 +1,6 @@
 import './Compose.css';
 import { useState } from 'react';
-import { Box, TextField, Button, Chip } from '@mui/material';
+import { Box, TextField, Button, Chip,FormControl,InputLabel,MenuItem,Select } from '@mui/material';
 import { IoMdClose, IoMdAttach } from "react-icons/io";
 import axios from 'axios';
 
@@ -8,7 +8,8 @@ const Compose = ({ onClose }) => {
     const [emailData, setEmailData] = useState({
         to: [],
         subject: '',
-        message: ''
+        message: '',
+        priority: 'average',
     });
     const [inputValue, setInputValue] = useState('');
     const [error, setError] = useState('');
@@ -55,7 +56,7 @@ const Compose = ({ onClose }) => {
             const token = localStorage.getItem('token');
             console.log('Token being sent:', token);
             console.log('Sending email to:', emailData.to);
-
+            console.log('Sending email to:', emailData.priority);
             const response = await axios.post(
                 'http://localhost:8080/api/mail/send',
                 emailData,
@@ -141,9 +142,20 @@ const Compose = ({ onClose }) => {
             </Box>
             
             <Box id='tools-box'>
-                <Box id='icon-attach'><IoMdAttach /></Box>
-                <Button 
-                    variant="contained" 
+                <FormControl sx={{ width: '150px' ,marginRight: 'auto'}}>
+                    <InputLabel>Priority</InputLabel>
+                    <Select
+                    value={emailData.priority}
+                    onChange={(e) => setEmailData({ ...emailData, priority: e.target.value })}
+                    >
+                        <MenuItem value="urgent">urgent</MenuItem>
+                        <MenuItem value="average">average</MenuItem>
+                        <MenuItem value="low">low</MenuItem>
+                    </Select>
+                </FormControl>
+                <Button id='icon-attach' sx={{alignContent:'center', width:'100px',height:'40px'}}><IoMdAttach /></Button>
+                <Button
+                    variant="contained"
                     onClick={handleSend}
                     disabled={loading}
                 >
