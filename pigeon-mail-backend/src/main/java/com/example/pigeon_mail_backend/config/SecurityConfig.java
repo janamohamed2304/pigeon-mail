@@ -59,6 +59,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/mail/**").authenticated()
+                .requestMatchers("/api/emails/**").authenticated()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session ->

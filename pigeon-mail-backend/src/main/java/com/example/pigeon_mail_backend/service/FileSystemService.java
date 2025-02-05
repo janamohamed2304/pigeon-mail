@@ -1,5 +1,6 @@
 package com.example.pigeon_mail_backend.service;
 
+import com.example.pigeon_mail_backend.model.Email;
 import com.example.pigeon_mail_backend.model.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -10,10 +11,9 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
+import java.nio.file.*;
+import java.util.*;
+
 
 @Service
 @Slf4j
@@ -66,7 +66,9 @@ public class FileSystemService {
             userRoot,
             userRoot.resolve("inbox"),
             userRoot.resolve("sent"),
-            userRoot.resolve("drafts"),
+            userRoot.resolve("draft"),
+            userRoot.resolve("starred"),
+            userRoot.resolve("trash"),
             userRoot.resolve("attachments")
         );
     }
@@ -105,4 +107,35 @@ public class FileSystemService {
     public String getRootPath() {
         return this.rootPath;
     }
+
+    public List<Email> readEmailsFromFolder(Path folderPath) {
+        List<Email> emails = new ArrayList<>();
+        if (!Files.exists(folderPath)) {
+            log.warn("Folder does not exist: {}", folderPath);
+            return emails;
+        }
+
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath, "*.json")) {
+            ObjectMapper mapper = new ObjectMapper()
+                .registerModule(new JavaTimeModule())
+                .setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+                
+            for (Path file : stream) {
+                try {
+                    Email email = mapper.readValue(file.toFile(), Email.class);
+                    emails.add(email);
+                } catch (IOException e) {
+                    log.error("Error reading email file: {}", file, e);
+                }
+            }
+        } catch (IOException e) {
+            log.error("Error reading folder: {}", folderPath, e);
+        }
+
+        // Sort emails by date descending
+        emails.sort((e1, e2) -> e2.getSentAt().compareTo(e1.getSentAt()));
+        return emails;
+    }
+
+    
 }

@@ -10,18 +10,16 @@ import { TextField } from '@mui/material';
 import { FaFolderPlus } from "react-icons/fa";
 
 function PigeonMail() {
-  const [openInbox, setOpenInbox] = useState(false);
-  const [openFolders, setOpenFolders] = useState(false);
-  const [openCompose, setOpenCompose] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [views, setViews] = useState({
-    inbox: false,
+    inbox: true,
     folders: false,
     compose: false,
     folderoptions: false,
     contacts: false,
   });
-  
+
+  const [currentFolder, setCurrentFolder] = useState('inbox');
   function handleViewSwitch(view) {
     setViews({
       inbox: false,
@@ -32,7 +30,7 @@ function PigeonMail() {
       [view]: true,
     });
   }
-  
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -41,21 +39,32 @@ function PigeonMail() {
     <>
       <div className='base'>
         <div className='sidebar'>
-          <div className='logo'><img src='src/assets/icons/lg.jpeg'/><h3>Mail</h3></div>
+          <div className='logo'>
+            <img src='src/assets/icons/lg.jpeg' alt="logo"/>
+            <h3>Mail</h3>
+          </div>
+          
           <button className='compose-btn' onClick={() => handleViewSwitch('compose')}>
             <img src='src/assets/icons/note.png' alt='compose' />
             <h2>Compose</h2>
           </button>
-          <button onClick={() => handleViewSwitch('inbox')}>Inbox</button>
-          <button onClick={() => handleViewSwitch('inbox')}>Starred</button>
-          <button onClick={() => handleViewSwitch('inbox')}>Sent</button>
-          <button onClick={() => handleViewSwitch('inbox')}>Draft</button>
-          <button onClick={() => handleViewSwitch('inbox')}>Trash</button>
-          <button className='folders-btn' onClick={() => handleViewSwitch('folders')}>Folders</button>
+          
+          <button onClick={() => {handleViewSwitch('inbox'); setCurrentFolder('inbox')}}>Inbox</button>
+          <button onClick={() => {handleViewSwitch('inbox'); setCurrentFolder('starred')}}>Starred</button>
+          <button onClick={() => {handleViewSwitch('inbox'); setCurrentFolder('sent')}}>Sent</button>
+          <button onClick={() => {handleViewSwitch('inbox'); setCurrentFolder('draft')}}>Draft</button>
+          <button onClick={() => {handleViewSwitch('inbox'); setCurrentFolder('trash')}}>Trash</button>
+          <button>Attachments</button>
+          <button className='folders-btn' onClick={() => handleViewSwitch('folders')}>
+            Folders
+          </button>
           <button onClick={() => handleViewSwitch('contacts')}>Contacts</button>
+          
           <div className='create-folder'>
             Create folder
-            <button onClick={() => handleViewSwitch('folderoptions')}><FaFolderPlus /></button>
+            <button onClick={() => handleViewSwitch('folderoptions')}>
+              <FaFolderPlus />
+            </button>
           </div>
         </div>
 
@@ -83,13 +92,17 @@ function PigeonMail() {
               <FilterMenu anchorEl={anchorEl} handleClose={handleClose} />
             </div>
           </div>
+          
           <div className='main-body'>
-            {views.inbox && <Inbox onClose={() => handleViewSwitch('')} />}
+            {views.inbox && <Inbox folder = {currentFolder} onClose={() => handleViewSwitch('')} />}
             {views.compose && <Compose onClose={() => handleViewSwitch('')} />}
             {views.folders && <Folders onClose={() => handleViewSwitch('')} />}
-            {views.folderoptions && <FolderOptions add={true} onClose={() => handleViewSwitch('')} />}
-            {views.contacts && <Contacts add={true} onClose={() => handleViewSwitch('')} />}
-            
+            {views.folderoptions && (
+              <FolderOptions add={true} onClose={() => handleViewSwitch('')} />
+            )}
+            {views.contacts && (
+              <Contacts add={true} onClose={() => handleViewSwitch('')} />
+            )}
           </div>
         </div>
       </div>

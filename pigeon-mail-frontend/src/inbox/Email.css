@@ -8,19 +8,22 @@
 .email-component:hover{
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
-.email-component .email-content{
-    width:100%;
-    height:100%;
-    display:flex;
-    flex-direction: row;
+.email-component  div{
+    width:130px;
+    height:90%;
+    display: flex;
+    overflow: hidden; /* Hides overflow */
+    word-wrap: break-word; /* Breaks long words */
+    margin-right: 10px;
+    /* background-color: blueviolet; */
 }
-.email-component .email-content div{
-    width:30%;
-}
+
 .email-component button{
     width:2.5%;
     height:90%;
     margin:1px;
+    margin-right: 2px;
+    border-radius: 5px;
     display:flex;
     justify-content: center;
     align-items: center;

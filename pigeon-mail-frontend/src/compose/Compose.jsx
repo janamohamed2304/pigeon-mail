@@ -4,8 +4,17 @@ import { Box, TextField, Button, Chip,FormControl,InputLabel,MenuItem,Select } f
 import { IoMdClose, IoMdAttach } from "react-icons/io";
 import axios from 'axios';
 
+
+let emailIdCounter = 0; // Counter for sequential IDs
+
+const generateEmailId = () => {
+    return emailIdCounter++;
+};
+
+
 const Compose = ({ onClose }) => {
     const [emailData, setEmailData] = useState({
+        id:  generateEmailId(),
         to: [],
         subject: '',
         message: '',
@@ -27,7 +36,6 @@ const Compose = ({ onClose }) => {
                 setError('Invalid email format');
                 return;
             }
-
             if (!emailData.to.includes(email)) {
                 setEmailData((prev) => ({
                     ...prev,
@@ -57,8 +65,9 @@ const Compose = ({ onClose }) => {
             console.log('Token being sent:', token);
             console.log('Sending email to:', emailData.to);
             console.log('Sending email to:', emailData.priority);
+            setEmailData.id
             const response = await axios.post(
-                'http://localhost:8080/api/mail/send',
+                'http://localhost:8080/api/email/send',
                 emailData,
                 {
                     headers: {
@@ -102,7 +111,7 @@ const Compose = ({ onClose }) => {
                 
     {/* Display added recipients only if there's at least one email */}
                 {emailData.to.length > 0 && (
-                    <Box 
+                    <Box
                         sx={{
                             display: 'flex',
                             flexWrap: 'wrap',
@@ -113,8 +122,8 @@ const Compose = ({ onClose }) => {
                     >
                         {emailData.to.map((email, index) => (
                             <Chip
-                                key={index} 
-                                label={email} 
+                                key={index}
+                                label={email}
                                 onDelete={() => handleRemoveEmail(email)}
                                 color="primary"
                             />
@@ -123,18 +132,18 @@ const Compose = ({ onClose }) => {
                 )}
 
 
-                <TextField 
-                    id='subject' 
-                    label="Subject" 
-                    type="text"  
+                <TextField
+                    id='subject'
+                    label="Subject"
+                    type="text"
                     size="small"
                     value={emailData.subject}
                     onChange={(e) => setEmailData({ ...emailData, subject: e.target.value })}
                 />
-                <TextField 
-                    id='message' 
-                    label="Message" 
-                    multiline 
+                <TextField
+                    id='message'
+                    label="Message"
+                    multiline
                     rows={8}
                     value={emailData.message}
                     onChange={(e) => setEmailData({ ...emailData, message: e.target.value })}

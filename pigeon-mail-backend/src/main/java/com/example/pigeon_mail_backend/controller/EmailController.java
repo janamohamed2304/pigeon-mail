@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/mail")
+@RequestMapping("/api/email")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class EmailController {
     

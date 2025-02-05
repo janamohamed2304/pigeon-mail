@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class Email {
+    private String id;
     private List<String> to;
     private String subject;
     private String message;
