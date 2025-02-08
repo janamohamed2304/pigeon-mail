@@ -114,7 +114,6 @@ public class FileSystemService {
             log.warn("Folder does not exist: {}", folderPath);
             return emails;
         }
-
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath, "*.json")) {
             ObjectMapper mapper = new ObjectMapper()
                 .registerModule(new JavaTimeModule())
@@ -131,11 +130,11 @@ public class FileSystemService {
         } catch (IOException e) {
             log.error("Error reading folder: {}", folderPath, e);
         }
-
+        //here send emails to be filtered by criterea classses
         // Sort emails by date descending
         emails.sort((e1, e2) -> e2.getSentAt().compareTo(e1.getSentAt()));
+
         return emails;
     }
-
     
 }

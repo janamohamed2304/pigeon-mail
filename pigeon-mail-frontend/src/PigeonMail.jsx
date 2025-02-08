@@ -10,6 +10,7 @@ import { TextField } from '@mui/material';
 import { FaFolderPlus } from "react-icons/fa";
 
 function PigeonMail() {
+  const[filteredEmails,setFilteredEmails] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [views, setViews] = useState({
     inbox: true,
@@ -89,12 +90,12 @@ function PigeonMail() {
                   }
                 }}
               />
-              <FilterMenu anchorEl={anchorEl} handleClose={handleClose} />
+              <FilterMenu  setFilteredEmails={setFilteredEmails} anchorEl={anchorEl} handleClose={handleClose} setCurrentFolder={setCurrentFolder}/>
             </div>
           </div>
           
           <div className='main-body'>
-            {views.inbox && <Inbox folder = {currentFolder} onClose={() => handleViewSwitch('')} />}
+            {views.inbox && <Inbox folder = {currentFolder} filteredEmails={filteredEmails} onClose={() => handleViewSwitch('')} />}
             {views.compose && <Compose onClose={() => handleViewSwitch('')} />}
             {views.folders && <Folders onClose={() => handleViewSwitch('')} />}
             {views.folderoptions && (

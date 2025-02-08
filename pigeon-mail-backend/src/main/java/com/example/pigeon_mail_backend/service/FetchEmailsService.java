@@ -1,6 +1,7 @@
 package com.example.pigeon_mail_backend.service;
 
 import com.example.pigeon_mail_backend.model.Email;
+import com.example.pigeon_mail_backend.model.FilterCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,24 +20,16 @@ public class FetchEmailsService {
         Path folderPath = Path.of(fileSystemService.getRootPath(), "users", userEmail, folder);
         return fileSystemService.readEmailsFromFolder(folderPath);
     }
-    
-    public List<Email> fetchStarredEmails(String userEmail) {
-        return fetchEmailsByFolder(userEmail, "starred");
+
+    public List<Email> fetchEmailsFiltered(String userEmail, FilterCriteria criteria) {
+
+        List<Email> emails = fetchEmailsByFolder(userEmail, "inbox");
+        emails.addAll(fetchEmailsByFolder(userEmail, "sent"));
+        emails.addAll(fetchEmailsByFolder(userEmail, "draft"));
+
+        FilterEmailsService filterEmailsService = new FilterEmailsService();
+        emails = filterEmailsService.filterEmails(emails, criteria);
+        return emails;
     }
     
-    public List<Email> fetchInboxEmails(String userEmail) {
-        return fetchEmailsByFolder(userEmail, "inbox");
-    }
-    
-    public List<Email> fetchSentEmails(String userEmail) {
-        return fetchEmailsByFolder(userEmail, "sent");
-    }
-    
-    public List<Email> fetchDraftEmails(String userEmail) {
-        return fetchEmailsByFolder(userEmail, "draft");
-    }
-    
-    public List<Email> fetchTrashEmails(String userEmail) {
-        return fetchEmailsByFolder(userEmail, "trash");
-    }
 }

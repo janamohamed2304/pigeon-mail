@@ -4,12 +4,12 @@ import './Inbox.css';
 import Email from '../inbox/Email';
 import axios from 'axios';
 
-function Inbox( {folder} ) {
+function Inbox( {folder,filteredEmails} ) {
   const [emails, setEmails] = useState([]);
-  const [loading, setLoading] = useState(false);
+
 
   const fetchEmails = async () => {
-    setLoading(true);
+
     try {
       console.log('Fetching emails...'+folder);
       const token = localStorage.getItem('token');
@@ -27,14 +27,16 @@ function Inbox( {folder} ) {
       setEmails(response.data);
     } catch (error) {
       console.error('Error fetching emails:', error);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchEmails();
-  }, [folder]); // re-fetch when folder changes
+    if (filteredEmails.length > 0 && folder === "filtered") {
+      setEmails(filteredEmails);
+    } else {
+      fetchEmails();
+    }
+  }, [folder]); // Only depend on `folder` to reset when switching views
 
   const handleReload = () => {
     fetchEmails();
@@ -60,13 +62,11 @@ function Inbox( {folder} ) {
       </div>
 
       <div className='inbox-body'>
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
+        {
           emails.map((email) => (
             <Email key={email.id} email={email} />
           ))
-        )}
+        }
       </div>
 
     </>
@@ -75,6 +75,7 @@ function Inbox( {folder} ) {
 
 Inbox.propTypes = {
   folder: PropTypes.string.isRequired,
+  filteredEmails:PropTypes.array.isRequired,
 };
 
 

@@ -11,13 +11,16 @@ FormControl,
 TextField,
 Chip,
 } from '@mui/material';
+import axios from 'axios';
 
 
-function FilterMenu() {
+import PropTypes from 'prop-types';
+
+function FilterMenu({setFilteredEmails,setCurrentFolder}) {
+
+
 const [anchorEl, setAnchorEl] = useState(null);
 const [filterOptions, setFilterOptions] = useState({
-    from: '',
-    to: '',
     subject: '',
     includeWords: '',
     date: '',
@@ -75,10 +78,31 @@ const handleRemoveReceiver = (index) => {
     }));
 };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
     console.log('Applying filter:', filterOptions);
+    try {
+    const token = localStorage.getItem('token');
+    const response = await axios.get(
+        `/api/emails/filter`,
+        {
+        params: filterOptions,
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
+        }
+    );
+    console.log('Filter response:', response.data);
+    setFilteredEmails(response.data);
+    setCurrentFolder('filtered')
     handleClose();
+    } catch (error) {
+        console.error('Error applying filters:', error);
+    }
 };
+
+
 
 return (
     <>
@@ -137,24 +161,6 @@ return (
         }}
     >
         <Box p={1} >
-        <Box display="flex" gap={0.7} >
-            <FormControl sx={{  width: '206px' }}>
-            <InputLabel>From</InputLabel>
-            <TextField
-                value={filterOptions.from}
-                onChange={(e) => handleFilterChange('from', e.target.value)}
-                size="small"
-            />
-            </FormControl>
-            <FormControl sx={{  width: '206px' }}>
-            <InputLabel>To</InputLabel>
-            <TextField
-                value={filterOptions.to}
-                onChange={(e) => handleFilterChange('to', e.target.value)}
-                size="small"
-            />
-            </FormControl>
-        </Box>
         <Box display="flex" gap={0.7} >
             <FormControl sx={{ width: '206px' }}>
             <InputLabel>Subject</InputLabel>
@@ -257,7 +263,8 @@ return (
                 <MenuItem value="low">low</MenuItem>
                 </Select>
             </FormControl>
-            <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ height: '32px' }}>
+            <Button variant="contained" color="primary" onClick={handleSubmit}
+            sx={{ height: '32px' }}>
             Search
             </Button>
         </Box>
@@ -266,5 +273,9 @@ return (
     </>
 );
 }
+FilterMenu.propTypes = {
+    setFilteredEmails: PropTypes.func.isRequired,
+    setCurrentFolder: PropTypes.func.isRequired
+};
 
 export default FilterMenu;

@@ -1,18 +1,18 @@
 import './Compose.css';
-import { useState } from 'react';
+import { useState} from 'react';
 import { Box, TextField, Button, Chip,FormControl,InputLabel,MenuItem,Select } from '@mui/material';
 import { IoMdClose, IoMdAttach } from "react-icons/io";
 import axios from 'axios';
 
 
-let emailIdCounter = 0; // Counter for sequential IDs
 
-const generateEmailId = () => {
-    return emailIdCounter++;
-};
 
 
 const Compose = ({ onClose }) => {
+
+
+    const generateEmailId = () => `email-${Date.now()}`;;
+
     const [emailData, setEmailData] = useState({
         id:  generateEmailId(),
         to: [],
