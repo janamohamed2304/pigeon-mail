@@ -36,7 +36,7 @@ function Inbox( {folder,filteredEmails} ) {
     } else {
       fetchEmails();
     }
-  }, [folder]); // Only depend on `folder` to reset when switching views
+  }, [folder,filteredEmails]);
 
   const handleReload = () => {
     fetchEmails();

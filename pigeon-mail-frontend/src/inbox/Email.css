@@ -15,6 +15,7 @@
     overflow: hidden; /* Hides overflow */
     word-wrap: break-word; /* Breaks long words */
     margin-right: 10px;
+    margin-top: 2px;
     /* background-color: blueviolet; */
 }
 

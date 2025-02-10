@@ -1,20 +1,15 @@
 import './Compose.css';
-import { useState} from 'react';
-import { Box, TextField, Button, Chip,FormControl,InputLabel,MenuItem,Select } from '@mui/material';
+import { useState, useEffect, useRef } from 'react';
+import { Box, TextField, Button, Chip, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { IoMdClose, IoMdAttach } from "react-icons/io";
 import axios from 'axios';
 
-
-
-
-
 const Compose = ({ onClose }) => {
-
-
-    const generateEmailId = () => `email-${Date.now()}`;;
+    const composeRef = useRef(null);
+    const generateEmailId = () => `email-${Date.now()}`;
 
     const [emailData, setEmailData] = useState({
-        id:  generateEmailId(),
+        id: generateEmailId(),
         to: [],
         subject: '',
         message: '',
@@ -23,6 +18,20 @@ const Compose = ({ onClose }) => {
     const [inputValue, setInputValue] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (composeRef.current && !composeRef.current.contains(event.target)) {
+                onClose();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [onClose]);
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
@@ -65,7 +74,7 @@ const Compose = ({ onClose }) => {
             console.log('Token being sent:', token);
             console.log('Sending email to:', emailData.to);
             console.log('Sending email to:', emailData.priority);
-            setEmailData.id
+            
             const response = await axios.post(
                 'http://localhost:8080/api/email/send',
                 emailData,
@@ -91,7 +100,7 @@ const Compose = ({ onClose }) => {
     };
 
     return (
-        <Box id='compose-box'>
+        <Box id='compose-box' ref={composeRef}>
             <Box id='compose-header'>
                 <span>New Message</span>
                 <Box id='icon-close'><IoMdClose onClick={onClose}/></Box>
@@ -109,7 +118,6 @@ const Compose = ({ onClose }) => {
                     helperText={error}
                 />
                 
-    {/* Display added recipients only if there's at least one email */}
                 {emailData.to.length > 0 && (
                     <Box
                         sx={{
@@ -131,7 +139,6 @@ const Compose = ({ onClose }) => {
                     </Box>
                 )}
 
-
                 <TextField
                     id='subject'
                     label="Subject"
@@ -151,18 +158,18 @@ const Compose = ({ onClose }) => {
             </Box>
             
             <Box id='tools-box'>
-                <FormControl sx={{ width: '150px' ,marginRight: 'auto'}}>
+                <FormControl sx={{ width: '150px', marginRight: 'auto' }}>
                     <InputLabel>Priority</InputLabel>
                     <Select
-                    value={emailData.priority}
-                    onChange={(e) => setEmailData({ ...emailData, priority: e.target.value })}
+                        value={emailData.priority}
+                        onChange={(e) => setEmailData({ ...emailData, priority: e.target.value })}
                     >
                         <MenuItem value="urgent">urgent</MenuItem>
                         <MenuItem value="average">average</MenuItem>
                         <MenuItem value="low">low</MenuItem>
                     </Select>
                 </FormControl>
-                <Button id='icon-attach' sx={{alignContent:'center', width:'100px',height:'40px'}}><IoMdAttach /></Button>
+                <Button id='icon-attach' sx={{alignContent:'center', width:'100px', height:'40px'}}><IoMdAttach /></Button>
                 <Button
                     variant="contained"
                     onClick={handleSend}

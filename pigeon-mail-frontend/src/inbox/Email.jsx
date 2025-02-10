@@ -9,7 +9,7 @@ function Email({email}) {
     <>
     <div className='email-component'>
       <button><img src='src/assets/icons/stop.png'/></button>
-      <button><img src='src/assets/icons/star.png'/></button>
+      <button><img src='src/assets/icons/star-empty.png'/></button>
         <div>{email.fromEmail}</div>
         <div>{email.subject}</div>
         <div>{email.message}</div>
